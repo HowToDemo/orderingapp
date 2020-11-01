@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.project'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.project.orderingapp'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.4.RELEASE'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+	compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.7'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.4.RELEASE'
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
