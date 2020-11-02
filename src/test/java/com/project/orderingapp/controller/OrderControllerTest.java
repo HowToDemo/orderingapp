@@ -38,7 +38,7 @@ public class OrderControllerTest {
 	private List<String> validOrigin;
 	private List<String> validDestination;
 	private List<OrderResponse> ordersResponse; 
-	
+	 
 	@Before
 	public void setUp() {
 		validOrigin = new ArrayList<>();
@@ -60,7 +60,7 @@ public class OrderControllerTest {
 	}
 	
 	@Test
-	public void whenCreateOrderReturnHttpStatusOk() {
+	public void whenCreateOrderReturnHttpStatusOk() throws Exception {
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         when(orderService.createOrder(Mockito.any())).thenReturn(orderResponse);
